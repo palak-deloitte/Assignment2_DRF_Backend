@@ -135,4 +135,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_PAGINATION_CLASS": "api.pagination.StandardPagination",
 }
+
+# Upload rules
+MAX_UPLOAD_BYTES = 5 * 1024 * 1024           
+ALLOWED_UPLOAD_EXTENSIONS = {".txt", ".pdf"}
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
