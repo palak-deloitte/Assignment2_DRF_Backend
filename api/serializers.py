@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import Document
+from .models import Document, QueryLog
 
 User = get_user_model()
 
@@ -25,3 +25,11 @@ class DocumentSerializer(serializers.ModelSerializer):
         model = Document
         fields = ['id', 'title', 'content', 'uploaded_at', 'owner']
         read_only_fields = ["id", "uploaded_at", "owner"]
+
+class QueryLogSerializer(serializers.ModelSerializer):
+    query_text = serializers.CharField(max_length=2000)
+
+    class Meta:
+        model = QueryLog
+        fields = ["id", "query_text", "result_summary", "created_at", "user"]
+        read_only_fields = ["id", "result_summary", "created_at", "user"]

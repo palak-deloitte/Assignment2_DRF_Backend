@@ -6,8 +6,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Document, UserSession
-from .serializers import DocumentSerializer, LoginSerializer, RegisterSerializer
+from .models import Document, QueryLog, UserSession
+from .serializers import DocumentSerializer, LoginSerializer, QueryLogSerializer, RegisterSerializer
 from .uploads import PayloadTooLarge, extract_text
 from rest_framework.permissions import SAFE_METHODS, AllowAny, IsAuthenticated
 from .permissions import IsOwner
@@ -90,3 +90,15 @@ class DocumentDetailView(generics.RetrieveDestroyAPIView):
         if self.request.method in SAFE_METHODS:
             return qs.filter(owner=self.request.user)
         return qs
+
+class QueryListView(generics.ListAPIView):
+    serializer_class = QueryLogSerializer
+
+    def get_queryset(self):
+        return QueryLog.objects.filter(user=self.request.user)
+
+class QueryCreateView(generics.CreateAPIView):
+    serializer_class = QueryLogSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

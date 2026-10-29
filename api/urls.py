@@ -7,4 +7,6 @@ urlpatterns = [
     path("auth/logout", views.LogoutView.as_view()),
     path("documents", views.DocumentListCreateView.as_view()),
     path("documents/<int:pk>", views.DocumentDetailView.as_view()),
+    path("query", views.QueryCreateView.as_view()),
+    path("queries", views.QueryListView.as_view()),
 ]
